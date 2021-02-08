@@ -35,7 +35,7 @@ class Upsample(nn.Module):
         else:
             return F.interpolate(x, size=(target_size[2], target_size[3]), mode='nearest')
 
-
+# DBL
 class Conv_Bn_Activation(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride, activation, bn=True, bias=False):
         super().__init__()
@@ -65,7 +65,7 @@ class Conv_Bn_Activation(nn.Module):
             x = l(x)
         return x
 
-
+#Res Unit_1
 class ResBlock(nn.Module):
     """
     Sequential residual blocks each of which consists of \
@@ -82,15 +82,31 @@ class ResBlock(nn.Module):
         self.module_list = nn.ModuleList()
         for i in range(nblocks):
             resblock_one = nn.ModuleList()
+
+            # UAV-YOLO used leaky
+
             resblock_one.append(Conv_Bn_Activation(ch, ch, 1, 1, 'mish'))
             resblock_one.append(Conv_Bn_Activation(ch, ch, 3, 1, 'mish'))
+
+            # extra 2 units
+            resblock_one.append(Conv_Bn_Activation(ch, ch, 3, 1, 'mish'))
+            resblock_one.append(Conv_Bn_Activation(ch, ch, 3, 1, 'mish'))
+
             self.module_list.append(resblock_one)
 
     def forward(self, x):
+        # x = input to the res unit_1
+        # for each res unit_2
         for module in self.module_list:
             h = x
-            for res in module:
-                h = res(h)
+            add_1 = x
+            add_2 = x # initialize
+            for res_idx in range(len(module)):
+                h = module[res_idx](h)
+                if res_idx == 0:
+                    add_2 = h
+                if res_idx == 1:
+
             x = x + h if self.shortcut else h
         return x
 
