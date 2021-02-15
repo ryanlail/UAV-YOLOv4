@@ -95,19 +95,29 @@ class ResBlock(nn.Module):
             self.module_list.append(resblock_one)
 
     def forward(self, x):
-        # x = input to the res unit_1
+        # x = input to the res unit_2
         # for each res unit_2
         for module in self.module_list:
             h = x
             add_1 = x
             add_2 = x # initialize
-            for res_idx in range(len(module)):
+            add_4 = x # initialize
+            for res_idx, _ in enumerate(module):
+                # update h
                 h = module[res_idx](h)
-                if res_idx == 0:
-                    add_2 = h
-                if res_idx == 1:
 
-            x = x + h if self.shortcut else h
+                # additions depending on DBL idx
+                if res_idx == 0:
+                    add_2 = h # input this before idx 3
+                if res_idx == 1:
+                    h = h + add_1
+                    add_4 = h
+                if res_idx == 2:
+                    h = h + add_1
+                if res_idx == 3:
+                    h = h + add_4
+            #x = x + h if self.shortcut else h
+            x = h
         return x
 
 
