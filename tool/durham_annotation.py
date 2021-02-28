@@ -3,15 +3,44 @@ from collections import defaultdict
 from tqdm import tqdm
 import os
 import sys
+import random
 
 # convert each annotation to file
 
-annotations_path = sys.argv[1]
-images_path = sys.argv[2]
-output_file = sys.argv[3]
+annotations_path = sys.argv[1] # ../../datasets/Durham-Versailles/Annotations/
+images_path = sys.argv[2] # ../../datasets/Durham-Versailles/images
+output_dir = sys.argv[3] # ../
 
-for root, dirs, files in os.walk(annotations_path, topdown=False):
-    for name in files:
-        with open(os.path.join(root, name)) as fh:
-            data
+with open(output_dir + "train.txt", "w") as tr:
+    with open(output_dir + "val.txt", "w") as vl:
+
+        for root, dirs, files in os.walk(annotations_path, topdown=False):
+            for name in tqdm(files):
+
+                if random.randint(0,1) < 0.2:
+                    of = vl
+                else:
+                    of = tr
+                
+                # for each img
+                of.write(name.replace("json", "png"))
+
+                with open(os.path.join(root, name)) as fh:
+                    data = json.load(fh)
+                    data = data[0]["annotation"]
+                    for annotation in data:
+                        try:
+                            # x1, y1, w, h
+                            x1 = annotation["bbox"][0]
+                            y1 = annotation["bbox"][1]
+                            x2 = x1 + annotation["bbox"][2]
+                            y2 = y1 + annotation["bbox"][3]
+                            label = 0
+
+                            of.write(" " + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + "," + str(label))
+
+                        except:
+                            pass
+                    of.write("\n")
+
 
