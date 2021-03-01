@@ -11,6 +11,9 @@ annotations_path = sys.argv[1] # ../../datasets/Durham-Versailles/Annotations/
 images_path = sys.argv[2] # ../../datasets/Durham-Versailles/images
 output_dir = sys.argv[3] # ../
 
+tags = dict()
+class_count = 0
+
 with open(output_dir + "train.txt", "w") as tr:
     with open(output_dir + "val.txt", "w") as vl:
 
@@ -35,12 +38,22 @@ with open(output_dir + "train.txt", "w") as tr:
                             y1 = annotation["bbox"][1]
                             x2 = x1 + annotation["bbox"][2]
                             y2 = y1 + annotation["bbox"][3]
-                            label = 0
+
+                            tag = annotation["tags"][0]
+                            
+                            if not tags.get(tag):
+                                tags[tag] = class_count
+                                class_count += 1
+                            
+                            label = tags.get(tag)
 
                             of.write(" " + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + "," + str(label))
 
                         except:
                             pass
                     of.write("\n")
+print(len(tags))
 
+with open(output_dir + "classes.json", "w") as fh:
+    json.dump(tags, fh)
 
