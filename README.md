@@ -1,6 +1,13 @@
 # Pytorch-YOLOv4
 
-python train.py -l 0.001 -classes 54 -dir ../datasets/Durham-Versailles/images
+## UAV-YOLO
+- Tool provided to convert durham dataset to neccesary format
+- Changed the customised config for the classes of the durham dataset
+- class mappings given in classes.json
+- model modified to UAV-YOLO
+- validation dataset given in data/val.txt
+- train dataset gien in train.txt
+`python train.py -l 0.001 -classes 54 -dir ../datasets/Durham-Versailles/images`
 
 ![](https://img.shields.io/static/v1?label=python&message=3.6|3.7&color=blue)
 ![](https://img.shields.io/static/v1?label=pytorch&message=1.4&color=<COLOR>)
