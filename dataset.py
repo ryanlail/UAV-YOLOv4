@@ -380,7 +380,7 @@ class Yolo_dataset(Dataset):
                                                        cut_y, i, left_shift, right_shift, top_shift, bot_shift)
                 out_bboxes.append(out_bbox)
                 # print(img_path)
-        if use_mixup == 3:
+        if use_mixup == 3 or isinstance(out_bboxes, list):
             out_bboxes = np.concatenate(out_bboxes, axis=0)
         out_bboxes1 = np.zeros([self.cfg.boxes, 5])
         out_bboxes1[:min(out_bboxes.shape[0], self.cfg.boxes)] = out_bboxes[:min(out_bboxes.shape[0], self.cfg.boxes)]
