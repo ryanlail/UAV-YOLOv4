@@ -425,7 +425,7 @@ def get_image_id(filename:str) -> int:
     """
 
     filename = filename.replace("image-rect-color-", "")
-    filename = filename.replace(".json", "")
+    filename = filename.replace(".png", "")
     filename = filename.replace(".", "")
     return int(filename)
 
