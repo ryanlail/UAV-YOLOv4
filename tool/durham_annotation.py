@@ -7,9 +7,9 @@ import random
 
 # convert each annotation to file
 
-annotations_path = sys.argv[1] # ../../datasets/Durham-Versailles/Annotations/
-images_path = sys.argv[2] # ../../datasets/Durham-Versailles/images
-output_dir = sys.argv[3] # ../
+annotations_path = "../../datasets/Durham-Versailles/Annotations/"
+images_path = "../../datasets/Durham-Versailles/images"
+output_dir = "../"
 
 tags = dict()
 class_count = 0
@@ -20,38 +20,40 @@ with open(output_dir + "train.txt", "w") as tr:
         for root, dirs, files in os.walk(annotations_path, topdown=False):
             for name in tqdm(files):
 
-                if random.randint(0,1) < 0.2:
+                if random.randint(0,10) < 2:
                     of = vl
                 else:
                     of = tr
-                
-                # for each img
-                of.write(name.replace("json", "png"))
 
                 with open(os.path.join(root, name)) as fh:
+
                     data = json.load(fh)
                     data = data[0]["annotation"]
-                    for annotation in data:
-                        try:
-                            # x1, y1, w, h
-                            x1 = annotation["bbox"][0]
-                            y1 = annotation["bbox"][1]
-                            x2 = x1 + annotation["bbox"][2]
-                            y2 = y1 + annotation["bbox"][3]
 
-                            tag = annotation["tags"][0]
-                            
-                            if not tags.get(tag):
-                                tags[tag] = class_count
-                                class_count += 1
-                            
-                            label = tags.get(tag)
+                    if len(data) > 0:
+                        of.write(name.replace("json", "png"))
 
-                            of.write(" " + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + "," + str(label))
+                        for annotation in data:
+                            try:
+                                # x1, y1, w, h
+                                x1 = annotation["bbox"][0]
+                                y1 = annotation["bbox"][1]
+                                x2 = x1 + annotation["bbox"][2]
+                                y2 = y1 + annotation["bbox"][3]
 
-                        except:
-                            pass
-                    of.write("\n")
+                                tag = annotation["tags"][0]
+                                
+                                if not tags.get(tag):
+                                    tags[tag] = class_count
+                                    class_count += 1
+                                
+                                label = tags.get(tag)
+
+                                of.write(" " + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + "," + str(label))
+
+                            except:
+                                pass
+                        of.write("\n")
 print(len(tags))
 
 with open(output_dir + "classes.json", "w") as fh:
