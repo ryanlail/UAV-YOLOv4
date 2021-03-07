@@ -117,7 +117,7 @@ class ResBlock(nn.Module):
                 if res_idx == 3:
                     h = h + add_4
             #x = x + h if self.shortcut else h
-            x = h
+            x = x + h
         return x
 
 
