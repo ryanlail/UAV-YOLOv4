@@ -366,8 +366,11 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
         epoch_loss = 0
         epoch_step = 0
 
-        with tqdm(total=n_train, desc=f'Epoch {epoch + 1}/{epochs}', unit='img', ncols=50) as pbar:
+        with tqdm(total=batch_size, desc=f'Epoch {epoch + 1}/{epochs}', unit='img', ncols=50) as pbar:
             for i, batch in enumerate(train_loader):
+                # don't iterate over entire dataset, each epoch, just a mini-batch
+                if i > batch_size:
+                    break
                 global_step += 1
                 epoch_step += 1
                 images = batch[0]
@@ -412,16 +415,16 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
 
                 pbar.update(images.shape[0])
 
-            if cfg.use_darknet_cfg:
-                eval_model = Darknet(cfg.cfgfile, inference=True)
-            else:
-                eval_model = Yolov4(cfg.pretrained, n_classes=cfg.classes, inference=True)
+            #if cfg.use_darknet_cfg:
+            #    eval_model = Darknet(cfg.cfgfile, inference=True)
+            #else:
+            #    eval_model = Yolov4(cfg.pretrained, n_classes=cfg.classes, inference=True)
             # eval_model = Yolov4(yolov4conv137weight=None, n_classes=config.classes, inference=True)
-            if torch.cuda.device_count() > 1:
-                eval_model.load_state_dict(model.module.state_dict())
-            else:
-                eval_model.load_state_dict(model.state_dict())
-            eval_model.to(device)
+            #if torch.cuda.device_count() > 1:
+            #    eval_model.load_state_dict(model.module.state_dict())
+            #else:
+            #    eval_model.load_state_dict(model.state_dict())
+            #eval_model.to(device)
             #evaluator = evaluate(eval_model, val_loader, config, device)
             #del eval_model
 
