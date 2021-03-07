@@ -369,8 +369,8 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
         with tqdm(total=batch_size, desc=f'Epoch {epoch + 1}/{epochs}', unit='img', ncols=50) as pbar:
             for i, batch in enumerate(train_loader):
                 # don't iterate over entire dataset, each epoch, just a mini-batch
-                if i > batch_size:
-                    break
+                #if i > batch_size:
+                #    break
                 global_step += 1
                 epoch_step += 1
                 images = batch[0]
@@ -378,7 +378,7 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
 
                 images = images.to(device=device, dtype=torch.float32)
                 bboxes = bboxes.to(device=device)
-                print(images)
+                #print(images)
                 bboxes_pred = model(images)
                 loss, loss_xy, loss_wh, loss_obj, loss_cls, loss_l2 = criterion(bboxes_pred, bboxes)
                 # loss = loss / config.subdivisions
@@ -392,6 +392,14 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
                     model.zero_grad()
 
                 if global_step % (log_step * config.subdivisions) == 0:
+                    print('train/Loss', loss.item(), global_step)
+                    print('train/loss_xy', loss_xy.item(), global_step)
+                    print('train/loss_wh', loss_wh.item(), global_step)
+                    print('train/loss_obj', loss_obj.item(), global_step)
+                    print('train/loss_cls', loss_cls.item(), global_step)
+                    print('train/loss_l2', loss_l2.item(), global_step)
+                    print('lr', scheduler.get_lr()[0] * config.batch, global_step)
+
                     writer.add_scalar('train/Loss', loss.item(), global_step)
                     writer.add_scalar('train/loss_xy', loss_xy.item(), global_step)
                     writer.add_scalar('train/loss_wh', loss_wh.item(), global_step)
