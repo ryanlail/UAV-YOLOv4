@@ -132,7 +132,7 @@ class Yolo_loss(nn.Module):
         super(Yolo_loss, self).__init__()
         self.device = device
         self.strides = [8, 16, 32]
-        image_size = 512
+        image_size = 608 # dimensions of images!!!!!
         self.n_classes = n_classes
         self.n_anchors = n_anchors
 
@@ -368,9 +368,7 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
 
         with tqdm(total=batch_size, desc=f'Epoch {epoch + 1}/{epochs}', unit='img', ncols=50) as pbar:
             for i, batch in enumerate(train_loader):
-                # don't iterate over entire dataset, each epoch, just a mini-batch
-                #if i > batch_size:
-                #    break
+
                 global_step += 1
                 epoch_step += 1
                 images = batch[0]
