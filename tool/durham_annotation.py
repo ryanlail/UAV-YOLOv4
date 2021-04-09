@@ -20,10 +20,10 @@ with open(output_dir + "train.txt", "w") as tr:
         for root, dirs, files in os.walk(annotations_path, topdown=False):
             for name in tqdm(files):
 
-                if random.randint(0,9) <= 2:
-                    of = vl
-                else:
-                    of = tr
+                #if random.randint(0,9) <= 2:
+                #    of = vl
+                #else:
+                #    of = tr
 
                 with open(os.path.join(root, name)) as fh:
 
