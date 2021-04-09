@@ -1,6 +1,6 @@
 import json
 from collections import defaultdict
-from tqdm import tqdm
+#from tqdm import tqdm
 import os
 import sys
 import random
@@ -18,7 +18,9 @@ with open(output_dir + "train.txt", "w") as tr:
     with open(output_dir + "val.txt", "w") as vl:
 
         for root, dirs, files in os.walk(annotations_path, topdown=False):
-            for name in tqdm(files):
+            for name in files:
+
+                of = tr
 
                 #if random.randint(0,9) <= 2:
                 #    of = vl
