@@ -290,7 +290,7 @@ def collate(batch):
 
 def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=20, img_scale=0.5):
     train_dataset = Yolo_dataset(config.train_label, config, train=True)
-    val_dataset = Yolo_dataset(config.val_label, config, train=False)
+    #val_dataset = Yolo_dataset(config.val_label, config, train=False)
 
     n_train = len(train_dataset)
     n_val = len(val_dataset)
@@ -298,7 +298,7 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
     train_loader = DataLoader(train_dataset, batch_size=config.batch // config.subdivisions, shuffle=True,
                               num_workers=8, pin_memory=True, drop_last=True, collate_fn=collate)
 
-    val_loader = DataLoader(val_dataset, batch_size=config.batch // config.subdivisions, shuffle=True, num_workers=8,
+    #val_loader = DataLoader(val_dataset, batch_size=config.batch // config.subdivisions, shuffle=True, num_workers=8,
                             pin_memory=True, drop_last=True, collate_fn=val_collate)
 
     writer = SummaryWriter(log_dir=config.TRAIN_TENSORBOARD_DIR,
