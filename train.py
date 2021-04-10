@@ -298,8 +298,7 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
     train_loader = DataLoader(train_dataset, batch_size=config.batch // config.subdivisions, shuffle=True,
                               num_workers=8, pin_memory=True, drop_last=True, collate_fn=collate)
 
-    #val_loader = DataLoader(val_dataset, batch_size=config.batch // config.subdivisions, shuffle=True, num_workers=8,
-                            pin_memory=True, drop_last=True, collate_fn=val_collate)
+    #val_loader = DataLoader(val_dataset, batch_size=config.batch // config.subdivisions, shuffle=True, num_workers=8, pin_memory=True, drop_last=True, collate_fn=val_collate)
 
     writer = SummaryWriter(log_dir=config.TRAIN_TENSORBOARD_DIR,
                            filename_suffix=f'OPT_{config.TRAIN_OPTIMIZER}_LR_{config.learning_rate}_BS_{config.batch}_Sub_{config.subdivisions}_Size_{config.width}',
