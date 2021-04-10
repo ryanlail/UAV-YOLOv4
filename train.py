@@ -315,7 +315,6 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
         Subdivisions:    {config.subdivisions}
         Learning rate:   {config.learning_rate}
         Training size:   {n_train}
-        Validation size: {n_val}
         Checkpoints:     {save_cp}
         Device:          {device.type}
         Images size:     {config.width}
