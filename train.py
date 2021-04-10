@@ -293,7 +293,7 @@ def train(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=
     #val_dataset = Yolo_dataset(config.val_label, config, train=False)
 
     n_train = len(train_dataset)
-    n_val = len(val_dataset)
+    #n_val = len(val_dataset)
 
     train_loader = DataLoader(train_dataset, batch_size=config.batch // config.subdivisions, shuffle=True,
                               num_workers=8, pin_memory=True, drop_last=True, collate_fn=collate)
