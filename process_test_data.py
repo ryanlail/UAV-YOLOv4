@@ -1,6 +1,10 @@
 import tqdm
 import json
 
+image_width = 1024
+image_height = 544
+
+
 with open("classes.json") as fh:
     labels = json.load(fh)
 
