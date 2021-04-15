@@ -362,7 +362,7 @@ def test(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=2
             ender.record()
             torch.cuda.synchronize()
             
-            pred = utils.post_processing(1, conf_threash, nms_threas, output)
+            pred = utils.post_processing(1, conf_threash, nms_threahs, output)
             preds.append({"time": starter.elapsed_time(ender)/1000, "pred": pred})
 
             targets[0]["boxes"] = targets[0]["boxes"].tolist()
