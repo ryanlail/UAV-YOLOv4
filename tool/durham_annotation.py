@@ -7,25 +7,21 @@ import random
 
 # convert each annotation to file
 
-annotations_path = "../../datasets/Durham-Versailles/Annotations/"
-images_path = "../../datasets/Durham-Versailles/images"
+annotations_path = "../../datasets/Durham-Versailles-Test/Annotations/"
+images_path = "../../datasets/Durham-Versailles-Test/images"
 output_dir = "../"
 
-tags = dict()
-class_count = 0
+#tags = dict()
+#class_count = 0
 
-with open(output_dir + "train.txt", "w") as tr:
-    with open(output_dir + "val.txt", "w") as vl:
+with open(output_dir + "test.txt", "w") as of:
+    with open(output_dir + "classes.json", "r") as cl:
+
+        tags = json.load(cl)
 
         for root, dirs, files in os.walk(annotations_path, topdown=False):
             for name in files:
 
-                of = tr
-
-                #if random.randint(0,9) <= 2:
-                #    of = vl
-                #else:
-                #    of = tr
 
                 with open(os.path.join(root, name)) as fh:
 
@@ -45,9 +41,9 @@ with open(output_dir + "train.txt", "w") as tr:
 
                                 tag = annotation["tags"][0]
                                 
-                                if not tags.get(tag):
-                                    tags[tag] = class_count
-                                    class_count += 1
+                                #if not tags.get(tag):
+                                #    tags[tag] = class_count
+                                #    class_count += 1
                                 
                                 label = tags.get(tag)
 
@@ -56,8 +52,8 @@ with open(output_dir + "train.txt", "w") as tr:
                             except:
                                 pass
                         of.write("\n")
-print(len(tags))
+#print(len(tags))
 
-with open(output_dir + "classes.json", "w") as fh:
-    json.dump(tags, fh)
+#with open(output_dir + "classes.json", "w") as fh:
+#    json.dump(tags, fh)
 
