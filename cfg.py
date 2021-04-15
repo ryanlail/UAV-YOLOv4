@@ -55,6 +55,7 @@ Cfg.gaussian = 0
 Cfg.boxes = 60  # box num
 Cfg.TRAIN_EPOCHS = 300
 Cfg.train_label = os.path.join(_BASE_DIR, 'train.txt')
+Cfg.test_label = os.path.join(_BASE_DIR, 'test.txt')
 #Cfg.val_label = os.path.join(_BASE_DIR, 'data' ,'val.txt')
 Cfg.TRAIN_OPTIMIZER = 'adam'
 '''
