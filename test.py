@@ -369,8 +369,6 @@ def test(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=2
             targets[0]["labels"] = targets[0]["labels"].tolist()
             gts.append({"boxes": targets[0]["boxes"], "labels": targets[0]["labels"]})
 
-            #
-            break
 
     with open("preds.json", "w") as fh:
         json.dump(preds, fh)
