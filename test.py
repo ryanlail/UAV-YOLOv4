@@ -294,7 +294,7 @@ def collate(batch):
 
 def test(model, device, config, epochs=5, batch_size=1, save_cp=True, log_step=20, img_scale=0.5):
     
-    model.load_state_dict(torch.load("checkpoints/Yolov4_epoch43.pth"))
+    model.load_state_dict(torch.load("checkpoints/Yolov4_epoch50.pth"))
     model.eval()
 
     test_width = 1024
