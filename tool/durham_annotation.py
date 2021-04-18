@@ -4,6 +4,7 @@ from collections import defaultdict
 import os
 import sys
 import random
+import numpy as np
 
 # convert each annotation to file
 
