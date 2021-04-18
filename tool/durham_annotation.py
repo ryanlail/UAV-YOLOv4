@@ -8,8 +8,8 @@ import numpy as np
 
 # convert each annotation to file
 
-annotations_path = "../../datasets/Durham-Versailles-Test/Annotations/"
-images_path = "../../datasets/Durham-Versailles-Test/images"
+annotations_path = "../../datasets/Durham-Versailles/Annotations/"
+images_path = "../../datasets/Durham-Versailles/images"
 output_dir = "../"
 
 # load dataset idxs and mappings
@@ -20,7 +20,7 @@ with open(os.path.join(DIR, "labels_idx.json"), "r") as fh:
     labels_idx = json.load(fh)
 
 
-with open(output_dir + "test.txt", "w") as of:
+with open(output_dir + "train.txt", "w") as of:
     for root, dirs, files in os.walk(annotations_path, topdown=False):
         for name in files:
             with open(os.path.join(root, name)) as fh:
