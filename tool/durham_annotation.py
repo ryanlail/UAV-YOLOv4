@@ -43,7 +43,7 @@ with open(output_dir + "test.txt", "w") as of:
                             y2 = np.clip(ymax,0,543)
                             
                             if x1 > x2 and y1 > y2:
-                                label = labels_index[labels_mapping[annotation["tags"][0]]]
+                                label = labels_idx[labels_mapping[annotation["tags"][0]]]
                                 of.write(" " + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + "," + str(label))
                             else:
                                 continue
