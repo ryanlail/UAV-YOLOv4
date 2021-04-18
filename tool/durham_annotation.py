@@ -11,49 +11,44 @@ annotations_path = "../../datasets/Durham-Versailles-Test/Annotations/"
 images_path = "../../datasets/Durham-Versailles-Test/images"
 output_dir = "../"
 
-#tags = dict()
-#class_count = 0
+# load dataset idxs and mappings
+DIR = "../datasets/Durham-Versailles-Maps"
+with open(os.path.join(DIR, "labels_mapping.json"), "r") as fh:
+    labels_mapping = json.load(fh)
+with open(os.path.join(DIR, "labels_idx.json"), "r") as fh:
+    labels_idx = json.load(fh)
+
 
 with open(output_dir + "test.txt", "w") as of:
-    with open(output_dir + "classes.json", "r") as cl:
+    for root, dirs, files in os.walk(annotations_path, topdown=False):
+        for name in files:
+            with open(os.path.join(root, name)) as fh:
 
-        tags = json.load(cl)
+                data = json.load(fh)
+                data = data[0]["annotation"]
 
-        for root, dirs, files in os.walk(annotations_path, topdown=False):
-            for name in files:
+                if len(data) > 0:
+                    of.write(name.replace("json", "png"))
 
-
-                with open(os.path.join(root, name)) as fh:
-
-                    data = json.load(fh)
-                    data = data[0]["annotation"]
-
-                    if len(data) > 0:
-                        of.write(name.replace("json", "png"))
-
-                        for annotation in data:
-                            try:
-                                # x1, y1, w, h
-                                x1 = annotation["bbox"][0]
-                                y1 = annotation["bbox"][1]
-                                x2 = x1 + annotation["bbox"][2]
-                                y2 = y1 + annotation["bbox"][3]
-
-                                tag = annotation["tags"][0]
-                                
-                                #if not tags.get(tag):
-                                #    tags[tag] = class_count
-                                #    class_count += 1
-                                
-                                label = tags.get(tag)
-
+                    for annotation in data:
+                        try:
+                            x1 = annotation["bbox"][0]
+                            x1 = np.clip(xmin,0,1023)
+                            y1 = annotation["bbox"][1]
+                            y1 = np.clip(ymin,0,543)
+                            x2 = xmin + annotation["bbox"][2]
+                            x2 = np.clip(xmax,0,1023)
+                            y2 = ymin + annotation["bbox"][3]
+                            y2 = np.clip(ymax,0,543)
+                            
+                            if x1 > x2 and y1 > y2:
+                                label = labels_index[labels_mapping[annotation["tags"][0]]]
                                 of.write(" " + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + "," + str(label))
+                            else:
+                                continue
 
-                            except:
-                                pass
-                        of.write("\n")
-#print(len(tags))
+                        except:
+                            # skip this annotation if there is either no bbox or label
+                            continue
 
-#with open(output_dir + "classes.json", "w") as fh:
-#    json.dump(tags, fh)
-
+                    of.write("\n")
