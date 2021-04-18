@@ -12,7 +12,7 @@ images_path = "../../datasets/Durham-Versailles-Test/images"
 output_dir = "../"
 
 # load dataset idxs and mappings
-DIR = "../datasets/Durham-Versailles-Maps"
+DIR = "../../datasets/Durham-Versailles-Maps"
 with open(os.path.join(DIR, "labels_mapping.json"), "r") as fh:
     labels_mapping = json.load(fh)
 with open(os.path.join(DIR, "labels_idx.json"), "r") as fh:
