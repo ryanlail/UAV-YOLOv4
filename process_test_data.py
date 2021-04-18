@@ -1,4 +1,4 @@
-import tqdm
+#import tqdm
 import json
 
 image_width = 1024
