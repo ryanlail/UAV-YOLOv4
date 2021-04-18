@@ -34,13 +34,13 @@ with open(output_dir + "test.txt", "w") as of:
                     for annotation in data:
                         try:
                             x1 = annotation["bbox"][0]
-                            x1 = np.clip(xmin,0,1023)
+                            x1 = np.clip(x1,0,1023)
                             y1 = annotation["bbox"][1]
-                            y1 = np.clip(ymin,0,543)
+                            y1 = np.clip(y1,0,543)
                             x2 = xmin + annotation["bbox"][2]
-                            x2 = np.clip(xmax,0,1023)
+                            x2 = np.clip(x2,0,1023)
                             y2 = ymin + annotation["bbox"][3]
-                            y2 = np.clip(ymax,0,543)
+                            y2 = np.clip(y2,0,543)
                             
                             if x1 > x2 and y1 > y2:
                                 label = labels_idx[labels_mapping[annotation["tags"][0]]]
