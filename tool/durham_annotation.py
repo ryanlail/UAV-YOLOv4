@@ -29,7 +29,7 @@ with open(output_dir + "train.txt", "w") as of:
                 data = data[0]["annotation"]
 
                 if len(data) > 0:
-                    of.write(name.replace("json", "png"))
+                    first = True
 
                     for annotation in data:
                         try:
@@ -44,6 +44,9 @@ with open(output_dir + "train.txt", "w") as of:
                             
                             if x2 > x1 and y2 > y1:
                                 label = labels_idx[labels_mapping[annotation["tags"][0]]]
+                                if first:
+                                    of.write(name.replace("json", "png"))
+                                    first = False
                                 of.write(" " + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + "," + str(label))
                             else:
                                 continue
