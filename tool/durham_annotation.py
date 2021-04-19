@@ -54,5 +54,5 @@ with open(output_dir + "train.txt", "w") as of:
                         except:
                             # skip this annotation if there is either no bbox or label
                             continue
-
-                    of.write("\n")
+                    if not first:
+                        of.write("\n")
