@@ -5,9 +5,11 @@ image_width = 1024
 image_height = 544
 
 
-with open("classes.json") as fh:
-    labels = json.load(fh)
-inv_labels = {v: k for k, v in labels.items()}
+# load dataset idxs and mappings
+DIR = "../datasets/Durham-Versailles-Maps"
+with open(os.path.join(DIR, "labels_idx.json"), "r") as fh:
+    labels_idx = json.load(fh)
+inv_labels = {v: k for k, v in labels_idx.items()}
 
 with open("preds.json") as fh:
     preds = json.load(fh)
